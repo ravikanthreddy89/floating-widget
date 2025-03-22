@@ -1,0 +1,16 @@
+<!-- Add this to any webpage to include the floating widget -->
+<script src="https://your-cdn-or-server.com/floating-widget.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Initialize the widget with custom options
+    const widget = FloatingWidget.init({
+      position: 'top-right', // options: top-left, top-right, bottom-left, bottom-right
+      apiUrl: 'https://your-api-endpoint.com/data'
+    });
+    
+    // You can control the widget programmatically
+    // widget.updatePosition('bottom-left');
+    // widget.toggle(); // Show/hide
+    // widget.destroy(); // Remove completely
+  });
+</script>
