@@ -24,8 +24,7 @@ module.exports = {
             drop_debugger: true
           }
         }
-      }),
-      new CssMinimizerPlugin()
+      })
     ]
   },
   performance: {
@@ -47,10 +46,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          'css-loader'
-        ]
+        use: ['style-loader', 'css-loader']
       }
     ]
   },

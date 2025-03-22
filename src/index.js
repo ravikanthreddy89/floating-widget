@@ -7,6 +7,28 @@ const WidgetController = {
   widget: null,
   container: null,
   root: null,
+  containerId: 'floating-widget-container',
+  isContainerCreated: false,
+
+  getOrCreateContainer(config) {
+    // First check if container is provided in config
+    if (config.containerElement) {
+      return config.containerElement;
+    }
+
+    // Check if container already exists in DOM
+    let container = document.getElementById(this.containerId);
+    
+    // If container doesn't exist and we haven't created one yet, create it
+    if (!container && !this.isContainerCreated) {
+      container = document.createElement('div');
+      container.id = this.containerId;
+      document.body.appendChild(container);
+      this.isContainerCreated = true;
+    }
+
+    return container;
+  },
 
   init(config = {}) {
     // Default configuration
@@ -19,17 +41,18 @@ const WidgetController = {
     // Merge provided config with defaults
     const mergedConfig = { ...defaultConfig, ...config };
 
-    // Create container if not provided
-    if (!mergedConfig.containerElement) {
-      this.container = document.createElement('div');
-      this.container.id = 'floating-widget-container';
-      document.body.appendChild(this.container);
-    } else {
-      this.container = mergedConfig.containerElement;
+    // Get or create container
+    this.container = this.getOrCreateContainer(mergedConfig);
+    
+    if (!this.container) {
+      console.error('Failed to initialize widget: Container element not found');
+      return null;
     }
 
-    // Create React 18 root
-    this.root = createRoot(this.container);
+    // Create React 18 root only if not already created
+    if (!this.root) {
+      this.root = createRoot(this.container);
+    }
 
     // Create App wrapper component to manage widget state
     const WidgetApp = () => {
@@ -49,10 +72,10 @@ const WidgetController = {
       ) : null;
     };
 
-    // Render the widget using the new API
+    // Render the widget
     this.root.render(<WidgetApp />);
 
-    // Return API for controlling the widget
+    // Return control API
     return {
       updatePosition: (newPosition) => {
         if (['top-left', 'top-right', 'bottom-left', 'bottom-right'].includes(newPosition)) {
@@ -75,12 +98,12 @@ const WidgetController = {
       },
       destroy: () => {
         if (this.root) {
-          // Unmount using the root's unmount method
           this.root.unmount();
           this.root = null;
-
-          if (this.container && this.container.parentNode) {
+          
+          if (this.container && this.container.parentNode && this.isContainerCreated) {
             this.container.parentNode.removeChild(this.container);
+            this.isContainerCreated = false;
           }
           this.container = null;
         }
