@@ -1,0 +1,56 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Floating Widget Demo</title><style>body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      height: 2000px; /* For scrolling demo */
+    }
+    h1 {
+      text-align: center;
+    }
+    .demo-controls {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #f5f5f5;
+      border-radius: 5px;
+    }
+    .control-group {
+      margin-bottom: 15px;
+    }
+    button {
+      padding: 8px 12px;
+      margin-right: 10px;
+      cursor: pointer;
+    }</style><script defer="defer" src="/floating-widget.js"></script><link href="/floating-widget.css" rel="stylesheet"></head><body><h1>Floating Widget Demo</h1><div class="demo-controls"><div class="control-group"><button id="topLeft">Top Left</button> <button id="topRight">Top Right</button> <button id="bottomLeft">Bottom Left</button> <button id="bottomRight">Bottom Right</button></div><div class="control-group"><button id="toggleWidget">Toggle Widget</button></div></div><div id="widget-container"></div><script>// This will initialize the widget once it's loaded
+    document.addEventListener('DOMContentLoaded', function() {
+      // Wait for the widget code to load
+      setTimeout(() => {
+        if (window.FloatingWidget) {
+          const widget = window.FloatingWidget.init({
+            position: 'top-right',
+            apiUrl: 'https://api.example.com/data',
+            containerElement: document.getElementById('widget-container')
+          });
+
+          // Demo controls
+          document.getElementById('topLeft').addEventListener('click', () => {
+            widget.updatePosition('top-left');
+          });
+
+          document.getElementById('topRight').addEventListener('click', () => {
+            widget.updatePosition('top-right');
+          });
+
+          document.getElementById('bottomLeft').addEventListener('click', () => {
+            widget.updatePosition('bottom-left');
+          });
+
+          document.getElementById('bottomRight').addEventListener('click', () => {
+            widget.updatePosition('bottom-right');
+          });
+
+          document.getElementById('toggleWidget').addEventListener('click', () => {
+            widget.toggle();
+          });
+        }
+      }, 500);
+    });</script></body></html>
