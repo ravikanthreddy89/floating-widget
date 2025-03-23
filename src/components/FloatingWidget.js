@@ -14,9 +14,11 @@ const FloatingWidget = () => {
     if (inputEmail === 'blue@paypal.com') {
       setIsBlue(true);
       setShowOffers(false);
+      setIsInputVisible(false); // Hide input after email entry
     } else if (inputEmail === 'offers@paypal.com') {
       setIsBlue(true);
       setShowOffers(true);
+      setIsInputVisible(false); // Hide input after email entry
     } else {
       setIsBlue(false);
       setShowOffers(false);
@@ -25,6 +27,39 @@ const FloatingWidget = () => {
 
   const handleLoginClick = () => {
     setIsInputVisible(true);
+  };
+
+  const renderContent = () => {
+    if (showOffers) {
+      return (
+        <div className="widget-content">
+          <ul className="offers-list">
+            {offers.map((offer, index) => (
+              <li key={index}>{offer}</li>
+            ))}
+          </ul>
+        </div>
+      );
+    }
+
+    if (isInputVisible) {
+      return (
+        <div className="email-input">
+          <input
+            type="email"
+            placeholder="Enter your email"
+            value={email}
+            onChange={handleEmailChange}
+          />
+        </div>
+      );
+    }
+
+    return (
+      <button className="login-button" onClick={handleLoginClick}>
+        Login to unlock more offers
+      </button>
+    );
   };
 
   const offers = [
@@ -43,32 +78,9 @@ const FloatingWidget = () => {
           </svg>
         </div>
         <div className="widget-content-wrapper">
-          {!isInputVisible ? (
-            <button className="login-button" onClick={handleLoginClick}>
-              Login to unlock more offers
-            </button>
-          ) : (
-            <div className="email-input">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                value={email}
-                onChange={handleEmailChange}
-              />
-            </div>
-          )}
+          {renderContent()}
         </div>
       </div>
-
-      {showOffers && (
-        <div className="widget-content">
-          <ul className="offers-list">
-            {offers.map((offer, index) => (
-              <li key={index}>{offer}</li>
-            ))}
-          </ul>
-        </div>
-      )}
     </div>
   );
 };
