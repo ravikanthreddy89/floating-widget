@@ -39,6 +39,7 @@
   background-color: #f8f9fa;
   border-radius: 8px;
   border-bottom: 1px solid #e9ecef;
+  gap: 12px;
 }
 
 .widget-header h3 {
@@ -92,10 +93,22 @@
 .paypal-logo {
   margin-right: 12px;
   transition: color 0.3s ease;
+  flex-shrink: 0;
+}
+
+.paypal-logo svg {
+  width: 101.97px;
+  height: 28px;
+  display: block;
+}
+
+.paypal-logo svg path {
+  transition: fill 0.3s ease;
 }
 
 .email-input {
   flex-grow: 1;
+  width: 100%;
 }
 
 .email-input input {
@@ -104,6 +117,7 @@
   border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 14px;
+  box-sizing: border-box;
 }
 
 .offers-list {
@@ -119,4 +133,25 @@
 
 .offers-list li:last-child {
   border-bottom: none;
+}
+
+.widget-content-wrapper {
+  flex-grow: 1;
+  min-width: 0; /* Prevents flex item from overflowing */
+}
+
+.login-button {
+  width: 100%;
+  padding: 8px 12px;
+  background-color: #0070BA;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+  background-color: #005ea6;
 }
