@@ -1,5 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { createRoot } from 'react-dom/client';
+import FloatingWidgetContainer from './components/FloatingWidgetContainer';
+
+const container = document.getElementById('root');
+const root = createRoot(container);
+root.render(<FloatingWidgetContainer />);
+
 import FloatingWidget from './components/FloatingWidget';
 
 // Main widget controller

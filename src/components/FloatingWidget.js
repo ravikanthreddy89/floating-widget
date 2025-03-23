@@ -11,6 +11,7 @@ const FloatingWidget = () => {
     const inputEmail = e.target.value;
     setEmail(inputEmail);
     
+
     if (inputEmail === 'blue@paypal.com') {
       setIsBlue(true);
       setShowOffers(false);
@@ -69,7 +70,7 @@ const FloatingWidget = () => {
   ];
 
   return (
-    <div className="floating-widget" style={{ top: '30vh' }}>
+    <div className="floating-widget">
       <div className="widget-header">
         <div className="paypal-logo" style={{ color: isBlue ? '#0070BA' : '#666666' }}>
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 101.97 124">
